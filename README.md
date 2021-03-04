@@ -111,3 +111,11 @@ PRODUCTSCHEME = {
 
 This is an interesting extraction from https://schema.org/Product to parse some kinds of ecommerce product items has standard that permit pathapi to analyse any website dataset.
 
+
+## Test mode
+
+Currently in studies, tests are too complicate due to dependencies and APIs needs...
+It can be processed only with setup from pathapi and tab execution from puppeteer so
+Tests has been removed from this repository because itsmake no sens outside of the APIM.bige.dev environment.
+
+Also pathapi uses other APIs from APIM such as puppeteer, image processor and much more to run right.
