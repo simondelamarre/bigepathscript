@@ -109,5 +109,5 @@ PRODUCTSCHEME = {
 }
 ```
 
-
+This is an interesting extraction from https://schema.org/Product to parse some kinds of ecommerce product items has standard that permit pathapi to analyse any website dataset.
 
