@@ -1,12 +1,10 @@
-"use strict";
 /**
  * Try to retrieve attribute like verbose from target element content tags and dataset
  * @param {HTMLElement} target
  * @param {string} verbose
  * @return {string} // string as sku or empry string
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (target) => {
+export default (target) => {
     const hrefs = target.querySelectorAll('a');
     if (hrefs.length > 0) {
         const url = [];

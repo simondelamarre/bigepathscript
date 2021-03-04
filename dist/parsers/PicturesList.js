@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (target) => {
+export default (target) => {
     const response = [];
     try {
         const images = target.querySelectorAll('img');

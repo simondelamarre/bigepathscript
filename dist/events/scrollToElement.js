@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Scroll to target element position Y
  * @param {HTMLElement} scroll // the element to scroll
@@ -14,11 +13,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const animateScroll_1 = require("./animateScroll");
-exports.default = (scroll, target) => {
+import AnimateScroll from "./animateScroll";
+export default (scroll, target) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-        const event = yield animateScroll_1.default(scroll, 500, target.scrollTop, 0, null);
+        const event = yield AnimateScroll(scroll, 500, target.scrollTop, 0, null);
         if (event)
             resolve(event);
         else

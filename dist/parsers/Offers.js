@@ -1,11 +1,9 @@
-"use strict";
 /**
  * retrieve offers in percent string sample -40%
  * @param {string} str // parsed string
  * @return {OFFER[]} [] list of prices in cents with devise
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (str) => {
+export default (str) => {
     str = str.replace(/\s/g, '');
     const response = [];
     try {

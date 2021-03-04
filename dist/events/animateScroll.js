@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Element scroll to posX, posY in delay then send callback
  * @param {HTMLElement} scroll  // the element to scroll
@@ -7,8 +6,7 @@
  * @param {number} posX  // the target scrollX in pixel
  * @param {Function} complete  // function called while scroll delay is complete
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (scroll, delay, posY, posX, complete) => {
+export default (scroll, delay, posY, posX, complete) => {
     return new Promise(function (resolve, reject) {
         try {
             const startX = scroll.scrollLeft;

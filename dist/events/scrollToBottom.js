@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @param {HTMLElement} scroll // the element to scroll - body by default
  * @param {Function} callback // called function while scrollevent task is comoplete
@@ -12,9 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const animateScroll_1 = require("./animateScroll");
-exports.default = (scroll, delay = 100) => {
+import AnimateScroll from "./animateScroll";
+export default (scroll, delay = 100) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             let scrollEnd = scroll.scrollHeight;
@@ -25,11 +23,11 @@ exports.default = (scroll, delay = 100) => {
                         resolve({ status: "complete" });
                     }
                     else {
-                        animateScroll_1.default(scroll, delay, scrollEnd, 0, finished);
+                        AnimateScroll(scroll, delay, scrollEnd, 0, finished);
                     }
                 }, 500 + delay);
             };
-            animateScroll_1.default(scroll, delay, scrollEnd, 0, finished);
+            AnimateScroll(scroll, delay, scrollEnd, 0, finished);
         }
         catch (err) {
             reject(err);

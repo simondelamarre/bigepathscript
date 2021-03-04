@@ -1,11 +1,9 @@
-"use strict";
 /**
  * Retrieve element list of attributes data- and others
  * @param  {HtmlElement} target // wich element you want to analyse
  * @return {array} // array of attributes from verbose
  **/
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (target) => {
+export default (target) => {
     const response = {};
     for (const attr of target.attributes) {
         response[attr.name] = attr.value;

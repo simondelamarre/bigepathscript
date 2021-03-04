@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Execute setup script
  * get and parse each static
@@ -27,12 +26,10 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getItem = exports.processListItem = exports.processScrollToBottom = exports.processLoadMoreButton = exports.bigePath = void 0;
-const scrollToBottom_1 = require("./events/scrollToBottom");
-const scrollToElement_1 = require("./events/scrollToElement");
-const productScheme_1 = require("./parsers/productScheme");
-exports.bigePath = (setup) => __awaiter(void 0, void 0, void 0, function* () {
+import scrollToBottom from "./events/scrollToBottom";
+import scrollToElement from "./events/scrollToElement";
+import productScheme from "./parsers/productScheme";
+export const bigePath = (setup) => __awaiter(void 0, void 0, void 0, function* () {
     const response = {
         static: {},
         list: []
@@ -58,13 +55,13 @@ exports.bigePath = (setup) => __awaiter(void 0, void 0, void 0, function* () {
       return response;
     } */
 });
-exports.processLoadMoreButton = (setup, response, callback) => __awaiter(void 0, void 0, void 0, function* () {
+export const processLoadMoreButton = (setup, response, callback) => __awaiter(void 0, void 0, void 0, function* () {
     var e_1, _a;
     try {
         // let response = [];
         for (var _b = __asyncValues(setup.lists), _c; _c = yield _b.next(), !_c.done;) {
             const list = _c.value;
-            response = response.concat(response, yield exports.processListItem(list.target.selector));
+            response = response.concat(response, yield processListItem(list.target.selector));
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -82,17 +79,17 @@ exports.processLoadMoreButton = (setup, response, callback) => __awaiter(void 0,
     else {
         loadMore.click();
         setTimeout(function () {
-            exports.processLoadMoreButton(setup, response, callback);
+            processLoadMoreButton(setup, response, callback);
         }, 1000);
     }
 });
-exports.processScrollToBottom = (setup, response, callback) => __awaiter(void 0, void 0, void 0, function* () {
+export const processScrollToBottom = (setup, response, callback) => __awaiter(void 0, void 0, void 0, function* () {
     var e_2, _d;
-    yield scrollToBottom_1.default(window.document.body, 500);
+    yield scrollToBottom(window.document.body, 500);
     try {
         for (var _e = __asyncValues(setup.lists), _f; _f = yield _e.next(), !_f.done;) {
             const list = _f.value;
-            response = response.concat(response, yield exports.processListItem(list.target.selector));
+            response = response.concat(response, yield processListItem(list.target.selector));
         }
     }
     catch (e_2_1) { e_2 = { error: e_2_1 }; }
@@ -105,7 +102,7 @@ exports.processScrollToBottom = (setup, response, callback) => __awaiter(void 0,
     callback(response);
     return response;
 });
-exports.processListItem = (selector) => {
+export const processListItem = (selector) => {
     let response = [];
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         var e_3, _a;
@@ -114,7 +111,7 @@ exports.processListItem = (selector) => {
             try {
                 for (var listTarget_1 = __asyncValues(listTarget), listTarget_1_1; listTarget_1_1 = yield listTarget_1.next(), !listTarget_1_1.done;) {
                     const listTar = listTarget_1_1.value;
-                    const data = yield exports.getItem(listTar);
+                    const data = yield getItem(listTar);
                     if (data)
                         response.push();
                 }
@@ -133,15 +130,15 @@ exports.processListItem = (selector) => {
         }
     }));
 };
-exports.getItem = (listTar) => {
+export const getItem = (listTar) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             if (!listTar.classList.contains('bigeProcessed')) {
-                yield scrollToElement_1.default(window.document.body, listTar);
+                yield scrollToElement(window.document.body, listTar);
                 // todo schemorg setup from item push on response
                 // response.push(listTar);
                 listTar.classList.add('bigeProcessed');
-                const scheme = yield productScheme_1.default(listTar);
+                const scheme = yield productScheme(listTar);
                 resolve(scheme);
             }
             else {
@@ -153,5 +150,5 @@ exports.getItem = (listTar) => {
         }
     }));
 };
-window.bigePath = exports.bigePath;
+window.bigePath = bigePath;
 //# sourceMappingURL=executePathSetup.js.map
