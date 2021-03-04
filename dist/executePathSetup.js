@@ -153,4 +153,5 @@ exports.getItem = (listTar) => {
         }
     }));
 };
+window.bigePath = exports.bigePath;
 //# sourceMappingURL=executePathSetup.js.map
