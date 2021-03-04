@@ -4,6 +4,7 @@
   "description": "basic path setup script executor dedicated to bigepath with bige  pupetter eval exec compatibility",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build",
     "test": "npm run test"
   },
   "repository": {
