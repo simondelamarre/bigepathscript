@@ -36,7 +36,8 @@ Once puppeteer receive a demand from path this lib will be executed then retriev
   - ToText  // simply retrieve HTMLElement parsed to text 
   - Material //  Not implemented - it will detect and retrieve materials dedicated to wears product items
   - Tags // not implementeed - thats a text processor that create string[] tags from text content
-  - Mannufacturer // not implemented due to unknown value on any tested websites
+  - Manufacturer // not implemented due to unknown value on any tested websites
+  - EnergyConsumptionDetails // noot implemented due to tested websites do not indicate 
 
 - Basic Processor
   - by enabling image processor in your setup anevery images will be tagged and parsed to retrieve colors
@@ -73,7 +74,6 @@ to learn more about setups please refer to the bigepathapi :
     - hit load moore button then loop list again
   - nextPage
     - retrieve next page url then refresh tab each time next button exist
-
 
 Once the setup is complete this script retrieve a Partial<PRODUCTSCHEME>[] :
 

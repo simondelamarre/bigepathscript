@@ -33,58 +33,46 @@ const scrollToBottom_1 = require("./events/scrollToBottom");
 const scrollToElement_1 = require("./events/scrollToElement");
 const productScheme_1 = require("./parsers/productScheme");
 exports.bigePath = (setup) => __awaiter(void 0, void 0, void 0, function* () {
-    var e_1, _a;
     const response = {
         static: {},
         list: []
     };
-    for (const stat of setup.static) {
-        const statElement = document.querySelector(stat.selector);
-        response.static[stat.label] = statElement.textContent;
+    return response;
+    /* for (const stat of setup.static) {
+      const statElement = document.querySelector(stat.selector);
+      response.static[stat.label] = statElement.textContent;
     }
     if (setup.navigation.mode === "loadMoreButton") {
-        return exports.processLoadMoreButton(setup, response.list, function (response) {
-            response.list = response;
-            return response;
-        });
-    }
-    else if (setup.navigation.mode === "scrollToBottom") {
-        return exports.processScrollToBottom(setup, response.list, function (response) {
-            return response;
-        });
-    }
-    else if (setup.navigation.mode === "nextButton") {
-        try {
-            for (var _b = __asyncValues(setup.lists), _c; _c = yield _b.next(), !_c.done;) {
-                const list = _c.value;
-                response.list = response.list.concat(response.list, yield exports.processListItem(list.target.selector));
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
+      return processLoadMoreButton(setup, response.list, function (response) {
+        response.list = response;
         return response;
-    }
+      });
+    } else if (setup.navigation.mode === "scrollToBottom") {
+      return processScrollToBottom(setup, response.list, function (response) {
+        return response;
+      });
+    } else if (setup.navigation.mode === "nextButton") {
+      for await (const list of setup.lists) {
+        response.list = response.list.concat(response.list, await processListItem(list.target.selector));
+      }
+      return response;
+    } */
 });
 exports.processLoadMoreButton = (setup, response, callback) => __awaiter(void 0, void 0, void 0, function* () {
-    var e_2, _d;
+    var e_1, _a;
     try {
         // let response = [];
-        for (var _e = __asyncValues(setup.lists), _f; _f = yield _e.next(), !_f.done;) {
-            const list = _f.value;
+        for (var _b = __asyncValues(setup.lists), _c; _c = yield _b.next(), !_c.done;) {
+            const list = _c.value;
             response = response.concat(response, yield exports.processListItem(list.target.selector));
         }
     }
-    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_f && !_f.done && (_d = _e.return)) yield _d.call(_e);
+            if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
         }
-        finally { if (e_2) throw e_2.error; }
+        finally { if (e_1) throw e_1.error; }
     }
     const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
     if (!loadMore) {
@@ -99,20 +87,20 @@ exports.processLoadMoreButton = (setup, response, callback) => __awaiter(void 0,
     }
 });
 exports.processScrollToBottom = (setup, response, callback) => __awaiter(void 0, void 0, void 0, function* () {
-    var e_3, _g;
+    var e_2, _d;
     yield scrollToBottom_1.default(window.document.body, 500);
     try {
-        for (var _h = __asyncValues(setup.lists), _j; _j = yield _h.next(), !_j.done;) {
-            const list = _j.value;
+        for (var _e = __asyncValues(setup.lists), _f; _f = yield _e.next(), !_f.done;) {
+            const list = _f.value;
             response = response.concat(response, yield exports.processListItem(list.target.selector));
         }
     }
-    catch (e_3_1) { e_3 = { error: e_3_1 }; }
+    catch (e_2_1) { e_2 = { error: e_2_1 }; }
     finally {
         try {
-            if (_j && !_j.done && (_g = _h.return)) yield _g.call(_h);
+            if (_f && !_f.done && (_d = _e.return)) yield _d.call(_e);
         }
-        finally { if (e_3) throw e_3.error; }
+        finally { if (e_2) throw e_2.error; }
     }
     callback(response);
     return response;
@@ -120,7 +108,7 @@ exports.processScrollToBottom = (setup, response, callback) => __awaiter(void 0,
 exports.processListItem = (selector) => {
     let response = [];
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-        var e_4, _a;
+        var e_3, _a;
         const listTarget = document.querySelectorAll(selector);
         try {
             try {
@@ -131,12 +119,12 @@ exports.processListItem = (selector) => {
                         response.push();
                 }
             }
-            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
             finally {
                 try {
                     if (listTarget_1_1 && !listTarget_1_1.done && (_a = listTarget_1.return)) yield _a.call(listTarget_1);
                 }
-                finally { if (e_4) throw e_4.error; }
+                finally { if (e_3) throw e_3.error; }
             }
             resolve(response);
         }

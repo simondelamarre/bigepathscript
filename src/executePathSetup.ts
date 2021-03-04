@@ -22,7 +22,8 @@ export const bigePath = async (setup: SETUP): Promise<any> => {
     static: {},
     list: []
   };
-  for (const stat of setup.static) {
+  return response;
+  /* for (const stat of setup.static) {
     const statElement = document.querySelector(stat.selector);
     response.static[stat.label] = statElement.textContent;
   }
@@ -40,7 +41,7 @@ export const bigePath = async (setup: SETUP): Promise<any> => {
       response.list = response.list.concat(response.list, await processListItem(list.target.selector));
     }
     return response;
-  }
+  } */
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
