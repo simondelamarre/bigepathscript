@@ -118,4 +118,4 @@ Currently in studies, tests are too complicate due to dependencies and APIs need
 It can be processed only with setup from pathapi and tab execution from puppeteer so
 Tests has been removed from this repository because itsmake no sens outside of the APIM.bige.dev environment.
 
-Also pathapi uses other APIs from APIM such as puppeteer, image processor and much more to run right.
+Also pathapi uses other APIs from APIM such as puppeteer, image processor and much more private APIs that make it run right...
