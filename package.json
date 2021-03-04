@@ -1,0 +1,29 @@
+{
+  "name": "bigepath_script",
+  "version": "1.0.0",
+  "description": "basic path setup script executor dedicated to bigepath with bige  pupetter eval exec compatibility",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simondelamarre/bigepathscript.git"
+  },
+  "keywords": [
+    "script",
+    "eval",
+    "scrollto",
+    "parser",
+    "image",
+    "processor",
+    "schemaOrg",
+    "productScheme"
+  ],
+  "author": "simondelamarre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simondelamarre/bigepathscript/issues"
+  },
+  "homepage": "https://github.com/simondelamarre/bigepathscript#readme"
+}
