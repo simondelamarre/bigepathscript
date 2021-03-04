@@ -34,6 +34,13 @@ Once puppeteer receive a demand from path this lib will be executed then retriev
   - Attributes // retrieve a list of attributes detected on any HTMLElement
   - ItemProps // for worst websites that retrieve a list of HTMLElement attributes 
   - ToText  // simply retrieve HTMLElement parsed to text 
+  - Material //  Not implemented - it will detect and retrieve materials dedicated to wears product items
+  - Tags // not implementeed - thats a text processor that create string[] tags from text content
+
+- Basic Processor
+  - by enabling image processor in your setup anevery images will be tagged and parsed to retrieve colors
+  - parser processor : add tags string[] to IMAGE from tensor image classifier module
+  - color processor : get dominant from picture and retrieve list with weight
 
 - Exec
   - bigePath(setup:SETUP) Once puppeteer has embeded bigepath_script lib its allowed to exec any setups from path
