@@ -17,7 +17,7 @@ import scrollToElement from "./events/scrollToElement";
 import { PRODUCTSCHEME } from "./types/ProductScheme";
 import { SETUP } from "./types/Setup";
 import productScheme from "./parsers/productScheme";
-export default async (setup: SETUP): Promise<any> => {
+export const bigePath = async (setup: SETUP): Promise<any> => {
   const response = {
     static: {},
     list: []
