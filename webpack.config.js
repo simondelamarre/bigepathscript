@@ -3,6 +3,7 @@ const { webpack } = require('webpack');
 module.exports = env => {
   return {
     entry: ['./src/executePathSetup.ts'],
+    mode: "production",
     devtool: 'inline-source-map',
     module: {
       rules: [

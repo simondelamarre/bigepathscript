@@ -19,29 +19,40 @@ import { SETUP } from "./types/Setup";
 import productScheme from "./parsers/productScheme";
 export const bigePath = async (setup: SETUP): Promise<any> => {
   const response = {
-    static: {},
+    static: {
+      url: window.location.href
+    },
     list: []
   };
-  return response;
-  /* for (const stat of setup.static) {
-    const statElement = document.querySelector(stat.selector);
-    response.static[stat.label] = statElement.textContent;
-  }
-  if (setup.navigation.mode === "loadMoreButton") {
-    return processLoadMoreButton(setup, response.list, function (response) {
-      response.list = response;
-      return response;
-    });
-  } else if (setup.navigation.mode === "scrollToBottom") {
-    return processScrollToBottom(setup, response.list, function (response) {
-      return response;
-    });
-  } else if (setup.navigation.mode === "nextButton") {
-    for await (const list of setup.lists) {
-      response.list = response.list.concat(response.list, await processListItem(list.target.selector));
+  try {
+    if (setup.static) {
+      for (const stat of setup.static) {
+        const statElement = document.querySelector(stat.selector);
+        response.static[stat.label] = statElement.textContent;
+      }
     }
-    return response;
-  } */
+    if (setup.navigation) {
+      if (setup.navigation.mode === "loadMoreButton") {
+        return processLoadMoreButton(setup, response.list, function (response) {
+          response.list = response;
+          return response;
+        });
+      } else if (setup.navigation.mode === "scrollToBottom") {
+        return processScrollToBottom(setup, response.list, function (response) {
+          return response;
+        });
+      } else if (setup.navigation.mode === "nextButton") {
+        for await (const list of setup.lists) {
+          response.list = response.list.concat(response.list, await processListItem(list.target.selector));
+        }
+        return response;
+      }
+    } else {
+      return response;
+    }
+  } catch (err) {
+    return { error: err, message: "wrong path setup" }
+  }
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
@@ -106,7 +117,11 @@ export const getItem = (listTar: HTMLElement) => {
   })
 }
 
+export const helloPuppeteer = async (str: string): Promise<string> => {
+  return `hello ${str}`;
+}
 declare global {
-  interface Window { bigePath: any; }
+  interface Window { bigePath: Function; helloPuppeteer: Function }
 }
 window.bigePath = bigePath;
+window.helloPuppeteer = helloPuppeteer;
