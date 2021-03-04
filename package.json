@@ -4,7 +4,8 @@
   "description": "basic path setup script executor dedicated to bigepath with bige  pupetter eval exec compatibility",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build",
+    "build": "tsc && npm run minify",
+    "minify": "terser --compress --output dist/executePathSetup.min.js -- dist/executePathSetup.js ",
     "test": "npm run test"
   },
   "repository": {
