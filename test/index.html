@@ -1,11 +1,95 @@
 <html>
 
 <head>
-    <script src="../dist/executePathSetup.min.js"></script>
+  <script src="../dist/executePathSetup.min.js"></script>
 </head>
 
 <body>
-    <h1>path script test lib</h1>
+  <h1>path script test lib</h1>
+
+  <script>
+    const setup = {
+      "ID": 1,
+      "userid": 3,
+      "website": {
+        "url": "https://oeufnyc.com",
+        "refresh": "Monthly",
+        "country": "FR",
+        "brand": "oeufnyc",
+        "searchURL": "https://oeufnyc.com/search/<%search%>"
+      },
+      "lists": [
+        {
+          "target": {
+            "label": "list_1872",
+            "selector": "DIV.ProductList DIV.usf-sr-product"
+          },
+          "additional": []
+        }
+      ],
+      "static": [],
+      "urls": [
+        {
+          "url": "/collections/fw20-hoodies-sweaters",
+          "tags": [
+            "kids"
+          ]
+        },
+        {
+          "url": "/collections/fw20-tops-tees",
+          "tags": [
+            "kids",
+            "top"
+          ]
+        },
+        {
+          "url": "/collections/fw20-bottoms",
+          "tags": [
+            "kids",
+            "bottom"
+          ]
+        },
+        {
+          "url": "/collections/fw20-dresses-jumpers",
+          "tags": [
+            "kids",
+            "dress"
+          ]
+        },
+        {
+          "url": "/collections/jackets-coats",
+          "tags": [
+            "kids",
+            "jacket",
+            "coat"
+          ]
+        },
+        {
+          "url": "/collections/fw20-accessories",
+          "tags": [
+            "kids",
+            "accessories"
+          ]
+        },
+        {
+          "url": "/collections/fw20-baby-essentials",
+          "tags": [
+            "baby"
+          ]
+        }
+      ],
+      "navigation": {
+        "mode": "scrollToBottom"
+      },
+      "created": "1",
+      "updated": "1"
+    }
+    let response;
+    window.bigePath(setup, function (e) {
+      console.log('response : ', e);
+    });
+    console.log('called window.bigePath type :: ', window.bigePath);
+  </script>
 </body>
 
 </html>

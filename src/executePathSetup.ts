@@ -17,7 +17,7 @@ import scrollToElement from "./events/scrollToElement";
 import { PRODUCTSCHEME } from "./types/ProductScheme";
 import { SETUP } from "./types/Setup";
 import productScheme from "./parsers/productScheme";
-export const bigePath = async (setup: SETUP): Promise<any> => {
+export const bigePath = async (setup: SETUP, callback: Function): Promise<any> => {
   const response = {
     static: {
       url: window.location.href
@@ -25,34 +25,38 @@ export const bigePath = async (setup: SETUP): Promise<any> => {
     list: []
   };
   try {
+    console.log('setup.static ', setup.static);
     if (setup.static) {
       for (const stat of setup.static) {
         const statElement = document.querySelector(stat.selector);
-        response.static[stat.label] = statElement.textContent;
+        if (statElement)
+          response.static[stat.label] = statElement.textContent;
       }
     }
+    console.log('setup.navigation ', setup.navigation);
     if (setup.navigation) {
       if (setup.navigation.mode === "loadMoreButton") {
-        return processLoadMoreButton(setup, response.list, function (response) {
+        response.list = await processLoadMoreButton(setup, response.list, function (response) {
           response.list = response;
           return response;
         });
       } else if (setup.navigation.mode === "scrollToBottom") {
-        return processScrollToBottom(setup, response.list, function (response) {
+        response.list = await processScrollToBottom(setup, response.list, function (response) {
           return response;
         });
       } else if (setup.navigation.mode === "nextButton") {
         for await (const list of setup.lists) {
           response.list = response.list.concat(response.list, await processListItem(list.target.selector));
         }
-        return response;
       }
     } else {
+      callback({ response: response });
       return response;
     }
   } catch (err) {
     return { error: err, message: "wrong path setup" }
   }
+  callback({ response: response });
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
