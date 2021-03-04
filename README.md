@@ -41,15 +41,66 @@ Once puppeteer receive a demand from path this lib will be executed then retriev
 ## Setup definition
 
 This is the type scheme of any setups from path :
-@param ID: number;
-@param userID: number;
-@param website: WEBSITE;
-@param urls: Partial<URLS>[];
-@param static: Partial<TARGET>[];
-@param lists: Partial<LIST>[];
-@param navigation: NAVIGATION;
-@param created: number;
-@param updated: number;
+- @param ID: number;
+- @param userID: number;
+- @param website: WEBSITE;
+- @param urls: Partial<URLS>[];
+- @param static: Partial<TARGET>[];
+- @param lists: Partial<LIST>[];
+- @param navigation: NAVIGATION;
+- @param created: number;
+- @param updated: number;
+
+to learn more about setups please refer to the bigepathapi :
+- original : https://pathapi.herokuapp.com/
+- apim API : https://apim.bige.dev/gateway/api/38
 
 ## whats does bigePath(setup)
+
+- check and parse static element from setup
+- check lists loop items and parse to ProductScheme
+- check navigation mode
+  - scrollToBottom
+    - wait page reload then loop list again
+  - loadMore
+    - hit load moore button then loop list again
+  - nextPage
+    - retrieve next page url then refresh tab each time next button exist
+
+
+Once the setup is complete this script retrieve a Partial<PRODUCTSCHEME>[] :
+
+```javascript
+PRODUCTSCHEME = {
+    brand: string;
+    category: string;
+    color: string;
+    additionalProperty: { [key: string]: string };
+    aggregateRating: Partial<RATING>;
+    description: string;
+    name: string;
+    model: string;
+    image: Partial<IMAGE>;
+    pictures: Partial<IMAGE>[];
+    sameAs: string;
+    sku: string;
+    productID: string;
+    releaseDate: Date;
+    purchaseDate: Date;
+    manufacturer: string;
+    logo: string;
+    material: Partial<MATERIAL>[];
+    url: string;
+    price: Partial<PRICE>;
+    prices: Partial<PRICE>[];
+    sizes: string[];
+    offers: OFFER[];
+    hasEnergyConsumptionDetails: boolean;
+    EnergyConsumptionDetails: Partial<EnergyConsumptionDetails>;
+    availlability: boolean;
+    tags: string[];
+}
+```
+
+
 
