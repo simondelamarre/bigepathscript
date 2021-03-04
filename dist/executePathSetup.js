@@ -28,11 +28,11 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getItem = exports.processListItem = exports.processScrollToBottom = exports.processLoadMoreButton = void 0;
+exports.getItem = exports.processListItem = exports.processScrollToBottom = exports.processLoadMoreButton = exports.bigePath = void 0;
 const scrollToBottom_1 = require("./events/scrollToBottom");
 const scrollToElement_1 = require("./events/scrollToElement");
 const productScheme_1 = require("./parsers/productScheme");
-exports.default = (setup) => __awaiter(void 0, void 0, void 0, function* () {
+exports.bigePath = (setup) => __awaiter(void 0, void 0, void 0, function* () {
     var e_1, _a;
     const response = {
         static: {},

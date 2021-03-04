@@ -3,7 +3,7 @@
 This repository contain basic functions extracted from BigePath Chrome Extension.
 The object of this repo is to build an eval script library dedicated to APIM puppeteer eval from paths setups.
 
-## How does bigepath_script
+## What is bigepath_script ?
 
 Bige path is wurrently under developpement...
 
@@ -18,12 +18,12 @@ this is a complexe environement that necessite this small library...
 
 Once puppeteer receive a demand from path this lib will be executed then retrieve you any kind of e-commerce website as product SchemaOrg augmented format.
 
-## fonctionnalities 
+## Fonctionnalities 
 
 - Scroll events
-  - scrollToTarget 
-  - scrollToBottom
-  - animateScroll
+  - scrollToTarget // prevent lazyloading images processor
+  - scrollToBottom // enable scroll to bottom websites to get complete items list on a page
+  - animateScroll // delayed and natural scroll event to prevent lazyloading and a part of bot detection
 
 - Parsers
   - prices // surch and retrieves prices detected in any text string value
@@ -36,10 +36,11 @@ Once puppeteer receive a demand from path this lib will be executed then retriev
   - ToText  // simply retrieve HTMLElement parsed to text 
   - Material //  Not implemented - it will detect and retrieve materials dedicated to wears product items
   - Tags // not implementeed - thats a text processor that create string[] tags from text content
+  - Mannufacturer // not implemented due to unknown value on any tested websites
 
 - Basic Processor
   - by enabling image processor in your setup anevery images will be tagged and parsed to retrieve colors
-  - parser processor : add tags string[] to IMAGE from tensor image classifier module
+  - parser processor : add tags string[] to IMAGE from mobilenet image classifier module
   - color processor : get dominant from picture and retrieve list with weight
 
 - Exec
@@ -48,15 +49,14 @@ Once puppeteer receive a demand from path this lib will be executed then retriev
 ## Setup definition
 
 This is the type scheme of any setups from path :
-- @param ID: number;
-- @param userID: number;
-- @param website: WEBSITE;
-- @param urls: Partial<URLS>[];
-- @param static: Partial<TARGET>[];
-- @param lists: Partial<LIST>[];
-- @param navigation: NAVIGATION;
-- @param created: number;
-- @param updated: number;
+- @param ID: number; // Until thats just you setup ID
+- @param userID: number; // Need an APIM account to store setup
+- @param website: WEBSITE; // Website setup by brand url and country
+- @param urls: Partial<URLS>[]; // list of urls to visit
+- @param static: Partial<TARGET>[]; // dedicated to product pages
+- @param lists: Partial<LIST>[]; // dedicated to pages list
+- @param navigation: NAVIGATION; // website page list navigation mode
+- [...until] created, updated, ID (...) from pathapi
 
 to learn more about setups please refer to the bigepathapi :
 - original : https://pathapi.herokuapp.com/
