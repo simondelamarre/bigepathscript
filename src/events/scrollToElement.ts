@@ -5,10 +5,10 @@
  * @param {Function} callback // called function while scrollevent task is comoplete
  */
 
-import AnimateScroll from "./animateScroll";
+import { animateScroll } from "./animateScroll";
 export default (scroll: HTMLElement, target: HTMLElement) => {
   return new Promise<any>(async (resolve, reject) => {
-    const event = await AnimateScroll(scroll, 500, target.scrollTop, 0, null);
+    const event = await animateScroll(scroll, 500, target.scrollTop, 0, null);
     if (event) resolve(event);
     else reject(event);
   })

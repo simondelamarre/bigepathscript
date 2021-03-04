@@ -4,7 +4,13 @@
   "description": "basic path setup script executor dedicated to bigepath with bige  pupetter eval exec compatibility",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && npm run minify",
+    "clean": "shx rm -rf _bundles lib lib-esm",
+    "build": "npm run webpack && npm run watch",
+    "esm": "tsc -m es6 --outDir lib-esm",
+    "webpack": "webpack --env NODE_ENV=development",
+    "prod": "webpack --env NODE_ENV=production",
+    "dev": "webpack",
+    "builder": "tsc && nm run minify",
     "minify": "terser --compress --output dist/executePathSetup.min.js -- dist/executePathSetup.js ",
     "test": "npm run test"
   },
@@ -27,5 +33,30 @@
   "bugs": {
     "url": "https://github.com/simondelamarre/bigepathscript/issues"
   },
-  "homepage": "https://github.com/simondelamarre/bigepathscript#readme"
+  "homepage": "https://github.com/simondelamarre/bigepathscript#readme",
+  "devDependencies": {
+    "shx": "^0.3.3",
+    "webpack": "^5.24.3",
+    "webpack-cli": "^4.5.0",
+    "cross-env": "^5.2.0",
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "@types/jest": "^23.3.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.2",
+    "copyfiles": "^2.1.0",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3",
+    "ts-loader": "^8.0.11"
+  }
 }

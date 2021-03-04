@@ -7,7 +7,7 @@
  * @param {Function} complete  // function called while scroll delay is complete
  */
 
-export default (scroll: HTMLElement, delay: number, posY: number, posX: number, complete: Function | null) => {
+export const animateScroll = (scroll: HTMLElement, delay: number, posY: number, posX: number, complete: Function | null) => {
   return new Promise<any>(function (resolve, reject) {
     try {
       const startX = scroll.scrollLeft;

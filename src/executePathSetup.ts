@@ -107,6 +107,6 @@ export const getItem = (listTar: HTMLElement) => {
 }
 
 declare global {
-  interface Window { bigePath: Function; }
+  interface Window { bigePath: any; }
 }
 window.bigePath = bigePath;

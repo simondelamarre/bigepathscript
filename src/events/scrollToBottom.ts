@@ -3,7 +3,7 @@
  * @param {Function} callback // called function while scrollevent task is comoplete
  */
 
-import AnimateScroll from "./animateScroll";
+import { animateScroll } from "./animateScroll";
 export default (scroll: HTMLElement, delay: number = 100) => {
   return new Promise<any>(async (resolve, reject) => {
     try {
@@ -14,11 +14,11 @@ export default (scroll: HTMLElement, delay: number = 100) => {
           if (scrollEnd === scroll.scrollHeight) {
             resolve({ status: "complete" })
           } else {
-            AnimateScroll(scroll, delay, scrollEnd, 0, finished)
+            animateScroll(scroll, delay, scrollEnd, 0, finished)
           }
         }, 500 + delay);
       };
-      AnimateScroll(scroll, delay, scrollEnd, 0, finished)
+      animateScroll(scroll, delay, scrollEnd, 0, finished)
     } catch (err) {
       reject(err);
     }
