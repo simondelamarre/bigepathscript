@@ -22,9 +22,11 @@ export const bigePath = async (setup: SETUP, callback: Function): Promise<any> =
     static: {
       url: window.location.href
     },
-    list: []
+    list: [],
+    message: "hello"
   };
   try {
+    response.message = "try";
     console.log('setup.static ', setup.static);
     if (setup.static) {
       for (const stat of setup.static) {
@@ -33,18 +35,23 @@ export const bigePath = async (setup: SETUP, callback: Function): Promise<any> =
           response.static[stat.label] = statElement.textContent;
       }
     }
-    console.log('setup.navigation ', setup.navigation);
+    response.message = "static passed";
+    console.log('setup.navigation ' + setup.navigation);
     if (setup.navigation) {
+      response.message = "has navigation " + setup.navigation;
       if (setup.navigation.mode === "loadMoreButton") {
+        response.message = "waiting parser loadmore";
         response.list = await processLoadMoreButton(setup, response.list, function (response) {
           response.list = response;
           return response;
         });
       } else if (setup.navigation.mode === "scrollToBottom") {
+        response.message = "waiting parser processScrollToBottom";
         response.list = await processScrollToBottom(setup, response.list, function (response) {
           return response;
         });
       } else if (setup.navigation.mode === "nextButton") {
+        response.message = "waiting parser processScrollToBottom";
         for await (const list of setup.lists) {
           response.list = response.list.concat(response.list, await processListItem(list.target.selector));
         }
@@ -54,6 +61,7 @@ export const bigePath = async (setup: SETUP, callback: Function): Promise<any> =
       return response;
     }
   } catch (err) {
+    callback({ response: response });
     return { error: err, message: "wrong path setup" }
   }
   callback({ response: response });
