@@ -17,52 +17,58 @@ import scrollToElement from "./events/scrollToElement";
 import { PRODUCTSCHEME } from "./types/ProductScheme";
 import { SETUP } from "./types/Setup";
 import productScheme from "./parsers/productScheme";
-export const bigePath = async (setup: SETUP, callback: Function): Promise<any> => {
-  const response = {
-    static: {
-      url: window.location.href
-    },
-    list: [],
-    message: "hello"
-  };
-  try {
-    response.message = "try";
-    if (setup.static) {
-      for (const stat of setup.static) {
-        const statElement = document.querySelector(stat.selector);
-        if (statElement)
-          response.static[stat.label] = statElement.textContent;
-      }
-    }
-    response.message = "static passed";
-    if (setup.navigation) {
-      response.message = "has navigation " + setup.navigation;
-      if (setup.navigation.mode === "loadMoreButton") {
-        response.message = "waiting parser loadmore";
-        response.list = await processLoadMoreButton(setup, response.list, function (response) {
-          response.list = response;
-          return response;
-        });
-      } else if (setup.navigation.mode === "scrollToBottom") {
-        response.message = "waiting parser processScrollToBottom";
-        response.list = await processScrollToBottom(setup, response.list, function (response) {
-          return response;
-        });
-      } else if (setup.navigation.mode === "nextButton") {
-        response.message = "waiting parser processScrollToBottom";
-        for await (const list of setup.lists) {
-          response.list = response.list.concat(response.list, await processListItem(list.target.selector));
+export const bigePath = async (setup: SETUP, callback: Function) => {
+  return new Promise(async resolve => {
+    const response = {
+      static: {
+        url: window.location.href
+      },
+      list: [],
+      message: "hello"
+    };
+    try {
+      response.message = "try";
+      if (setup.static) {
+        for (const stat of setup.static) {
+          const statElement = document.querySelector(stat.selector);
+          if (statElement)
+            response.static[stat.label] = statElement.textContent;
         }
       }
-    } else {
+      response.message = "static passed";
+      if (setup.navigation) {
+        response.message = "has navigation " + setup.navigation;
+        if (setup.navigation.mode === "loadMoreButton") {
+          response.message = "waiting parser loadmore";
+          response.list = await processLoadMoreButton(setup, response.list, function (res) {
+            return response;
+          });
+          resolve(response);
+        } else if (setup.navigation.mode === "scrollToBottom") {
+          response.message = "waiting parser processScrollToBottom";
+          response.list = await processScrollToBottom(setup, response.list, function (response) {
+            return response;
+          });
+          resolve(response);
+        } else if (setup.navigation.mode === "nextButton") {
+          response.message = "waiting parser processScrollToBottom";
+          for await (const list of setup.lists) {
+            response.list = response.list.concat(response.list, await processListItem(list.target.selector));
+          }
+          resolve(response);
+        }
+      } else {
+        callback({ response: response });
+        resolve(response);
+        return response;
+      }
+    } catch (err) {
       callback({ response: response });
-      return response;
+      resolve(response);
+      return { error: err, message: "wrong path setup" }
     }
-  } catch (err) {
     callback({ response: response });
-    return { error: err, message: "wrong path setup" }
-  }
-  callback({ response: response });
+  });
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
