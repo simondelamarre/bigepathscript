@@ -6,16 +6,21 @@
  */
 
 import { animateScroll } from "./animateScroll";
-export default (scroll: HTMLElement, target: HTMLElement) => {
-
+export default (target: HTMLElement) => {
   return new Promise<any>(async (resolve, reject) => {
     if (target) {
-      const event = await animateScroll(scroll, 500, target.scrollTop, 0, null);
+      const event = await animateScroll(
+        500,
+        window.scrollY,
+        window.scrollX,
+        window.scrollY + target.getBoundingClientRect().y,
+        window.scrollX + target.getBoundingClientRect().x,
+        null
+      );
       if (event) resolve(event);
       else reject(event);
     } else
       resolve(true)
   })
-
 }
 // new Promise<string>((resolve, reject) => { });

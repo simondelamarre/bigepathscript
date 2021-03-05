@@ -4,22 +4,23 @@
  */
 
 import { animateScroll } from "./animateScroll";
-export default (scroll: HTMLElement, delay: number = 100) => {
+export default (delay: number = 100) => {
   if (scroll)
     return new Promise<any>(async (resolve, reject) => {
       try {
-        let scrollEnd = scroll.scrollHeight;
+        let scrollEnd = document.body.scrollHeight;
         const finished = function () {
           // waiting page load then check page.scrollHeight has changed
           setTimeout(function () {
-            if (scrollEnd === scroll.scrollHeight) {
+            if (scrollEnd === document.body.scrollHeight) {
               resolve({ status: "complete" })
             } else {
-              animateScroll(scroll, delay, scrollEnd, 0, finished)
+              scrollEnd = document.body.scrollHeight;
+              animateScroll(delay, window.scrollY, window.scrollX, scrollEnd, 0, finished)
             }
           }, 500 + delay);
         };
-        animateScroll(scroll, delay, scrollEnd, 0, finished)
+        animateScroll(delay, window.scrollY, window.scrollX, scrollEnd, 0, finished)
       } catch (err) {
         reject(err);
       }

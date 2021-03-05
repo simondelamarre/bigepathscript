@@ -27,7 +27,6 @@ export const bigePath = async (setup: SETUP, callback: Function): Promise<any> =
   };
   try {
     response.message = "try";
-    console.log('setup.static ', setup.static);
     if (setup.static) {
       for (const stat of setup.static) {
         const statElement = document.querySelector(stat.selector);
@@ -36,7 +35,6 @@ export const bigePath = async (setup: SETUP, callback: Function): Promise<any> =
       }
     }
     response.message = "static passed";
-    console.log('setup.navigation ' + setup.navigation);
     if (setup.navigation) {
       response.message = "has navigation " + setup.navigation;
       if (setup.navigation.mode === "loadMoreButton") {
@@ -85,7 +83,7 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], callb
 }
 
 export const processScrollToBottom = async (setup: SETUP, response: any[], callback: Function) => {
-  await scrollToBottom(window.document.body, 500);
+  await scrollToBottom(1500);
   for await (const list of setup.lists) {
     response = response.concat(response, await processListItem(list.target.selector));
   }
@@ -101,7 +99,7 @@ export const processListItem = (selector: string) => {
       for await (const listTar of listTarget) {
         const data = await getItem(listTar as HTMLElement);
         if (data)
-          response.push();
+          response.push(data);
       }
       resolve(response);
     } catch (err) {
@@ -114,7 +112,7 @@ export const getItem = (listTar: HTMLElement) => {
   return new Promise<Partial<PRODUCTSCHEME>>(async (resolve, reject) => {
     try {
       if (!listTar.classList.contains('bigeProcessed')) {
-        await scrollToElement(window.document.body, (listTar as HTMLElement));
+        await scrollToElement((listTar as HTMLElement));
         // todo schemorg setup from item push on response
         // response.push(listTar);
         listTar.classList.add('bigeProcessed');
@@ -133,7 +131,12 @@ export const helloPuppeteer = async (str: string): Promise<string> => {
   return `hello ${str}`;
 }
 declare global {
-  interface Window { bigePath: Function; helloPuppeteer: Function }
+  interface Window {
+    bigePath: Function;
+    helloPuppeteer: Function;
+    scrollToBottom: Function;
+  }
 }
 window.bigePath = bigePath;
 window.helloPuppeteer = helloPuppeteer;
+window.scrollToBottom = scrollToBottom;
