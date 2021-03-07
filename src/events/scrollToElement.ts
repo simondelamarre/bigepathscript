@@ -10,7 +10,7 @@ export default (target: HTMLElement) => {
   return new Promise<any>(async (resolve, reject) => {
     if (target) {
       const event = await animateScroll(
-        500,
+        100,
         window.scrollY,
         window.scrollX,
         window.scrollY + target.getBoundingClientRect().y,

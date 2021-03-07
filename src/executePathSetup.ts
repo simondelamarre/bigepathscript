@@ -89,7 +89,7 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], callb
 }
 
 export const processScrollToBottom = async (setup: SETUP, response: any[], callback: Function) => {
-  await scrollToBottom(1500);
+  await scrollToBottom(200);
   for await (const list of setup.lists) {
     response = response.concat(response, await processListItem(list.target.selector));
   }

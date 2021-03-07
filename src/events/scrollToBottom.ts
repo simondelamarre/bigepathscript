@@ -18,7 +18,7 @@ export default (delay: number = 100) => {
               scrollEnd = document.body.scrollHeight;
               animateScroll(delay, window.scrollY, window.scrollX, scrollEnd, 0, finished)
             }
-          }, 500 + delay);
+          }, 100 + delay);
         };
         animateScroll(delay, window.scrollY, window.scrollX, scrollEnd, 0, finished)
       } catch (err) {
