@@ -25,6 +25,28 @@ export default (target: HTMLElement): Partial<IMAGE>[] => {
         console.error('ERROR in pictures selector loop');
       }
     }
+    // get srcset and data-srcset if exist
+    const dataSrcSet = target.attributes['data-srcset'];
+    if (dataSrcSet) {
+      const srcSetList = dataSrcSet.split(',');
+      for (let pix of srcSetList) {
+        const uri = pix.split(' ')[0];
+        if (response.findIndex(e => e.url === uri) === -1) {
+          response.push({ url: uri, description: "" });
+        }
+      }
+    }
+    //data-srcset
+    const srcset = target.attributes['srcset'];
+    if (srcset) {
+      const srcSetList = srcset.split(',');
+      for (let pix of srcSetList) {
+        const uri = pix.split(' ')[0];
+        if (response.findIndex(e => e.url === uri) === -1) {
+          response.push({ url: uri, description: "" });
+        }
+      }
+    }
   } catch (err) {
     console.error("ERROR PICTuRe LIST ::: ", err);
   }
