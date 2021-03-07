@@ -20,7 +20,7 @@ export default (target: HTMLElement): Partial<IMAGE>[] => {
         /* if (url && url !== "")
           if (url.indexOf('http') === -1) url = `https://${url}`; */
         if (response.findIndex(e => e.url === url) === -1)
-          response.push({ url: url, description: desc ? desc : "" });
+          response.push({ url: url, description: desc ? desc : "no-description" });
       } catch (err) {
         console.error('ERROR in pictures selector loop');
       }
@@ -32,7 +32,7 @@ export default (target: HTMLElement): Partial<IMAGE>[] => {
       for (let pix of srcSetList) {
         const uri = pix.split(' ')[0];
         if (response.findIndex(e => e.url === uri) === -1) {
-          response.push({ url: uri, description: "" });
+          response.push({ url: uri, description: "no-description" });
         }
       }
     }
@@ -43,7 +43,7 @@ export default (target: HTMLElement): Partial<IMAGE>[] => {
       for (let pix of srcSetList) {
         const uri = pix.split(' ')[0];
         if (response.findIndex(e => e.url === uri) === -1) {
-          response.push({ url: uri, description: "" });
+          response.push({ url: uri, description: "no-description" });
         }
       }
     }
