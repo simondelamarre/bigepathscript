@@ -7,6 +7,6 @@
 import { MATERIAL } from "../types/Material";
 
 export default (target: HTMLElement): Partial<MATERIAL>[] => {
-    console.info('material is under development target ', target);
+    // console.info('material is under development target ', target);
     return []
 }

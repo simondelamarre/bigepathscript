@@ -17,6 +17,31 @@ export default (target: HTMLElement): Partial<IMAGE>[] => {
         let url: string = ""
         if (picture.attributes['src'])
           url = picture.attributes['src'].value;
+
+        // get srcset and data-srcset if exist
+        const dataSrcSet = picture.attributes['data-srcset'];
+        console.log('dataSrcSet ', dataSrcSet);
+        if (dataSrcSet) {
+          const srcSetList = dataSrcSet.value.split(',');
+          console.log('srcSetList ', srcSetList)
+          for (let pix of srcSetList) {
+            const uri = pix.split(' ')[0];
+            if (response.findIndex(e => e.url === uri) === -1) {
+              response.push({ url: uri, description: "no-description" });
+            }
+          }
+        }
+        //data-srcset
+        const srcset = picture.attributes['srcset'];
+        if (srcset) {
+          const srcSetList = srcset.value.split(',');
+          for (let pix of srcSetList) {
+            const uri = pix.split(' ')[0];
+            if (response.findIndex(e => e.url === uri) === -1) {
+              response.push({ url: uri, description: "no-description" });
+            }
+          }
+        }
         /* if (url && url !== "")
           if (url.indexOf('http') === -1) url = `https://${url}`; */
         if (response.findIndex(e => e.url === url) === -1)
@@ -25,28 +50,7 @@ export default (target: HTMLElement): Partial<IMAGE>[] => {
         console.error('ERROR in pictures selector loop');
       }
     }
-    // get srcset and data-srcset if exist
-    const dataSrcSet = target.attributes['data-srcset'];
-    if (dataSrcSet) {
-      const srcSetList = dataSrcSet.split(',');
-      for (let pix of srcSetList) {
-        const uri = pix.split(' ')[0];
-        if (response.findIndex(e => e.url === uri) === -1) {
-          response.push({ url: uri, description: "no-description" });
-        }
-      }
-    }
-    //data-srcset
-    const srcset = target.attributes['srcset'];
-    if (srcset) {
-      const srcSetList = srcset.split(',');
-      for (let pix of srcSetList) {
-        const uri = pix.split(' ')[0];
-        if (response.findIndex(e => e.url === uri) === -1) {
-          response.push({ url: uri, description: "no-description" });
-        }
-      }
-    }
+
   } catch (err) {
     console.error("ERROR PICTuRe LIST ::: ", err);
   }
