@@ -95,6 +95,7 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], page:
   for await (const list of setup.lists) {
     const news = await processListItem(list.target.selector);
     console.log('news ?? ', news, response);
+    if (!response) response = []
     response = response.concat(news);
   }
   const loadMore = document.querySelector(setup.navigation.loadMoreSelector);

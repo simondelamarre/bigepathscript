@@ -42,7 +42,7 @@ module.exports = env => {
       modules: ['node_modules', path.join(__dirname, 'src'), 'assets'],
     },
     output: {
-      filename: 'executePathSetupV6.min.js',
+      filename: 'executePathSetupV7.min.js',
       path: path.resolve(__dirname, 'dist'),
       library: "pathScript",
       libraryTarget: "umd"
