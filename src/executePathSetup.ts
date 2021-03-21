@@ -47,6 +47,9 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
         if (setup.navigation.mode === "loadMore") {
           console.log('load more nav mode');
           response.message = "waiting parser loadmore";
+          console.log("waiting parser loadmore wait a second");
+          await waitasecond(500);
+          console.log("waiting parser loadmore wait a second AFTER");
           await processLoadMoreButton(setup, response.list, 0, function (res, pages) {
             console.log('processed ', res);
             response.list = res;
@@ -154,6 +157,11 @@ export const getItem = (listTar: HTMLElement) => {
   })
 }
 
+export const waitasecond = async (delay: number) => {
+  return new Promise<boolean>(async (resolve) => {
+    setTimeout(function () { resolve(true) }, delay)
+  })
+}
 export const helloPuppeteer = async (str: string): Promise<string> => {
   return `hello ${str}`;
 }
