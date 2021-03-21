@@ -49,7 +49,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
           response.list = await processLoadMoreButton(setup, response.list, function (res) {
             return res;
           });
-          console.log('will  resolve');
+          console.log('will resolve');
           resolve(response);
         } else if (setup.navigation.mode === "scrollToBottom") {
           response.message = "waiting parser processScrollToBottom";
@@ -82,11 +82,12 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
   console.log('processLoadMoreButton');
   // let response = [];
-  for await (const list of setup.lists) {
-    response = response.concat(response, await processListItem(list.target.selector));
-  }
   const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
   if (!loadMore) {
+    // process all when list load more is kicked
+    for await (const list of setup.lists) {
+      response = response.concat(response, await processListItem(list.target.selector));
+    }
     callback(response);
     return response;
   } else {
