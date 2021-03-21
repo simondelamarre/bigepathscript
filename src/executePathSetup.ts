@@ -46,7 +46,9 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
         if (setup.navigation.mode === "loadMore") {
           console.log('load more nav mode');
           response.message = "waiting parser loadmore";
-          response.list = await processLoadMoreButton(setup, response.list, function (res) {
+          await processLoadMoreButton(setup, response.list, function (res) {
+            console.log('processed ', res);
+            response.list = res;
             return res;
           });
           console.log('will resolve');
@@ -80,14 +82,16 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
-  console.log('processLoadMoreButton');
+  console.log('processLoadMoreButton ', response, setup.lists);
   // let response = [];
+  for await (const list of setup.lists) {
+    const news = await processListItem(list.target.selector);
+    console.log('news ?? ', news, response);
+    response = response.concat(news);
+  }
   const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
   if (!loadMore) {
     // process all when list load more is kicked
-    for await (const list of setup.lists) {
-      response = response.concat(response, await processListItem(list.target.selector));
-    }
     callback(response);
     return response;
   } else {
@@ -113,9 +117,12 @@ export const processListItem = (selector: string) => {
     const listTarget = document.querySelectorAll(selector);
     try {
       for await (const listTar of listTarget) {
-        const data = await getItem(listTar as HTMLElement);
-        if (data)
-          response.push(data);
+        if (!listTar.classList.contains('processed')) {
+          const data = await getItem(listTar as HTMLElement);
+          if (data)
+            response.push(data);
+          listTar.classList.add('processed');
+        }
       }
       resolve(response);
     } catch (err) {
