@@ -51,9 +51,9 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
           console.log("waiting parser loadmore wait a second");
           await waitasecond(500);
           console.log("waiting parser loadmore wait a second AFTER");
-          await processLoadMoreButton(setup, response.list, 0, function (res, pages, btn) {
+          response.list = await processLoadMoreButton(setup, response.list, 0, function (res, pages, btn) {
             console.log('processed ', res);
-            response.list = res;
+            /* response.list = res; */
             response.pages = pages;
             response.btn = btn;
             return res;
@@ -91,26 +91,33 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], page: number, callback: Function) => {
   console.log('processLoadMoreButton ', response, setup.lists);
-  // let response = [];
-  for await (const list of setup.lists) {
-    const news = await processListItem(list.target.selector);
-    console.log('news ?? ', news, response);
-    if (!response) response = []
-    response = response.concat(news);
-  }
-  const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
-  if (!loadMore) {
-    if (page === 0) page = -1;
-    // process all when list load more is kicked
-    callback(response, page, loadMore);
-    return response;
-  } else {
-    (loadMore as HTMLElement).click();
-    setTimeout(function () {
-      page++;
-      processLoadMoreButton(setup, response, page, callback);
-    }, 1000);
-  }
+  return new Promise<PRODUCTSCHEME[]>(async (resolve, reject) => {
+    // let response = [];
+    async function parse(setup: SETUP, response: any[], page: number) {
+      for await (const list of setup.lists) {
+        const news = await processListItem(list.target.selector);
+        console.log('news ?? ', news, response);
+        if (!response) response = []
+        response = response.concat(news);
+      }
+      const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
+      if (!loadMore) {
+        if (page === 0) page = -1;
+        // process all when list load more is kicked
+        callback(response, page, loadMore);
+        resolve(response);
+        return response;
+      } else {
+        (loadMore as HTMLElement).click();
+        setTimeout(function () {
+          page++;
+          parse(setup, response, page);
+          // processLoadMoreButton(setup, response, page, callback);
+        }, 500);
+      }
+    }
+    parse(setup, response, page);
+  });
 }
 
 export const processScrollToBottom = async (setup: SETUP, response: any[], callback: Function) => {
