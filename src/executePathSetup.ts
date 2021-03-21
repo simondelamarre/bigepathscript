@@ -18,7 +18,9 @@ import { PRODUCTSCHEME } from "./types/ProductScheme";
 import { SETUP } from "./types/Setup";
 import productScheme from "./parsers/productScheme";
 export const bigePath = async (setup: SETUP, callback: Function) => {
+  console.log('bigePath');
   return new Promise(async resolve => {
+    console.log('in promise');
     const response = {
       static: {
         url: window.location.href
@@ -26,6 +28,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
       list: [],
       message: "hello"
     };
+    console.log('let try');
     try {
       response.message = "try";
       if (setup.static) {
@@ -35,14 +38,18 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
             response.static[stat.label] = statElement.textContent;
         }
       }
+      console.log('static passed');
       response.message = "static passed";
+      console.log('setup.navigation ', setup.navigation);
       if (setup.navigation) {
         response.message = "has navigation " + setup.navigation;
-        if (setup.navigation.mode === "loadMoreButton") {
+        if (setup.navigation.mode === "loadMore") {
+          console.log('load more nav mode');
           response.message = "waiting parser loadmore";
           response.list = await processLoadMoreButton(setup, response.list, function (res) {
-            return response;
+            return res;
           });
+          console.log('will  resolve');
           resolve(response);
         } else if (setup.navigation.mode === "scrollToBottom") {
           response.message = "waiting parser processScrollToBottom";
@@ -63,7 +70,8 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
         return response;
       }
     } catch (err) {
-      callback({ response: response });
+      console.log('has error');
+      callback({ response: response, err: err });
       resolve(response);
       return { error: err, message: "wrong path setup" }
     }
@@ -72,6 +80,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
+  console.log('processLoadMoreButton');
   // let response = [];
   for await (const list of setup.lists) {
     response = response.concat(response, await processListItem(list.target.selector));
