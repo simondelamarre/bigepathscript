@@ -27,6 +27,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
       },
       list: [],
       pages: 0,
+      btn: null,
       message: "hello"
     };
     console.log('let try');
@@ -50,10 +51,11 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
           console.log("waiting parser loadmore wait a second");
           await waitasecond(500);
           console.log("waiting parser loadmore wait a second AFTER");
-          await processLoadMoreButton(setup, response.list, 0, function (res, pages) {
+          await processLoadMoreButton(setup, response.list, 0, function (res, pages, btn) {
             console.log('processed ', res);
             response.list = res;
             response.pages = pages;
+            response.btn = btn;
             return res;
           });
           response.message = "processLoadMoreButton processed";
@@ -97,8 +99,9 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], page:
   }
   const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
   if (!loadMore) {
+    if (page === 0) page = -1;
     // process all when list load more is kicked
-    callback(response, page);
+    callback(response, page, loadMore);
     return response;
   } else {
     (loadMore as HTMLElement).click();
