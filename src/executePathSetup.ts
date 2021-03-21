@@ -26,6 +26,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
         url: window.location.href
       },
       list: [],
+      pages: 0,
       message: "hello"
     };
     console.log('let try');
@@ -46,11 +47,13 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
         if (setup.navigation.mode === "loadMore") {
           console.log('load more nav mode');
           response.message = "waiting parser loadmore";
-          await processLoadMoreButton(setup, response.list, function (res) {
+          await processLoadMoreButton(setup, response.list, 0, function (res, pages) {
             console.log('processed ', res);
             response.list = res;
+            response.pages = pages;
             return res;
           });
+          response.message = "processLoadMoreButton processed";
           console.log('will resolve');
           resolve(response);
         } else if (setup.navigation.mode === "scrollToBottom") {
@@ -81,7 +84,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
   });
 }
 
-export const processLoadMoreButton = async (setup: SETUP, response: any[], callback: Function) => {
+export const processLoadMoreButton = async (setup: SETUP, response: any[], page: number, callback: Function) => {
   console.log('processLoadMoreButton ', response, setup.lists);
   // let response = [];
   for await (const list of setup.lists) {
@@ -92,12 +95,13 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], callb
   const loadMore = document.querySelector(setup.navigation.loadMoreSelector);
   if (!loadMore) {
     // process all when list load more is kicked
-    callback(response);
+    callback(response, page);
     return response;
   } else {
     (loadMore as HTMLElement).click();
     setTimeout(function () {
-      processLoadMoreButton(setup, response, callback);
+      page++;
+      processLoadMoreButton(setup, response, page, callback);
     }, 1000);
   }
 }
