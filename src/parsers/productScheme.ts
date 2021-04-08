@@ -14,6 +14,7 @@ import { PRODUCTSCHEME } from "../types/ProductScheme"
 import Offers from "./Offers"
 import PicturesList from "./PicturesList"
 import ToText from "./ToText"
+import Discount from "./DiscountCalculator";
 
 export default async (target: HTMLElement): Promise<Partial<PRODUCTSCHEME>> => {
   try {
@@ -24,7 +25,16 @@ export default async (target: HTMLElement): Promise<Partial<PRODUCTSCHEME>> => {
     response.description = ToText(target);
     response.prices = Prices(response.description);
     response.price = response.prices[0] ? response.prices[0] : {};
-    response.offers = Offers(response.description);
+    // calc offer from prices
+    if (response.prices.length === 2)
+      response.offers = [{
+        operator: '-',
+        amount: Discount(response.prices[0].price, response.prices[1].price),
+        reducer: "%"
+      }]
+    else
+      response.offers = Offers(response.description);
+    // response.offers = Offers(response.description);
     response.tags = images[0] && images[0].tags ? images[0].tags : [];
     response.additionalProperty = Attributes(target);
     response.sku = AttributeLike(target, 'sku');

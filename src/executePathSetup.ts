@@ -18,9 +18,7 @@ import { PRODUCTSCHEME } from "./types/ProductScheme";
 import { SETUP } from "./types/Setup";
 import productScheme from "./parsers/productScheme";
 export const bigePath = async (setup: SETUP, callback: Function) => {
-  console.log('bigePath');
   return new Promise(async resolve => {
-    console.log('in promise');
     const response = {
       static: {
         url: window.location.href
@@ -30,7 +28,6 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
       btn: null,
       message: "hello"
     };
-    console.log('let try');
     try {
       response.message = "try";
       if (setup.static) {
@@ -173,16 +170,12 @@ export const waitasecond = async (delay: number) => {
     setTimeout(function () { resolve(true) }, delay)
   })
 }
-export const helloPuppeteer = async (str: string): Promise<string> => {
-  return `hello ${str}`;
-}
+
 declare global {
   interface Window {
     bigePath: Function;
-    helloPuppeteer: Function;
     scrollToBottom: Function;
   }
 }
 window.bigePath = bigePath;
-window.helloPuppeteer = helloPuppeteer;
 window.scrollToBottom = scrollToBottom;
