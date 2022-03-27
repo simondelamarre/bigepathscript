@@ -72,7 +72,7 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
           resolve(response);
         }
       } else {
-        callback({ response: response });
+        callback({ response: response, navigation: setup.navigation });
         resolve(response);
         return response;
       }
