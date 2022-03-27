@@ -110,7 +110,7 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], page:
           page++;
           parse(setup, response, page);
           // processLoadMoreButton(setup, response, page, callback);
-        }, 500);
+        }, 1500);
       }
     }
     parse(setup, response, page);

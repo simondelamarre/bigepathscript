@@ -2,7 +2,10 @@
 
 <head>
   <!-- <script src="../dist/executePathSetup.min.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/gh/simondelamarre/bigepathscript/dist/executePathSetupV8.min.js"></script>
+  <!-- <script
+    src="https://raw.githubusercontent.com/simondelamarre/bigepathscript/master/dist/executePathSetupV8.min.js"></script> -->
+  <script
+    src="https://cdn.jsdelivr.net/gh/simondelamarre/bigepathscript@latest/dist/executePathSetupV8.min.js"></script>
 </head>
 
 <body>
@@ -10,20 +13,20 @@
 
   <script>
     const setup = {
-      "ID": 1,
+      "ID": 4,
       "userid": 3,
       "website": {
-        "url": "https://oeufnyc.com",
+        "url": "https://www.okaidi.fr",
         "refresh": "Monthly",
         "country": "FR",
-        "brand": "oeufnyc",
-        "searchURL": "https://oeufnyc.com/search/<%search%>"
+        "brand": "okaidi",
+        "searchURL": "https://www.okaidi.fr/Acheter/<%search%>"
       },
       "lists": [
         {
           "target": {
-            "label": "list_1872",
-            "selector": "DIV.ProductList DIV.usf-sr-product"
+            "label": "list_7622",
+            "selector": "UL.item-grid LI.item-box"
           },
           "additional": []
         }
@@ -31,56 +34,14 @@
       "static": [],
       "urls": [
         {
-          "url": "/collections/fw20-hoodies-sweaters",
-          "tags": [
-            "kids"
-          ]
-        },
-        {
-          "url": "/collections/fw20-tops-tees",
-          "tags": [
-            "kids",
-            "top"
-          ]
-        },
-        {
-          "url": "/collections/fw20-bottoms",
-          "tags": [
-            "kids",
-            "bottom"
-          ]
-        },
-        {
-          "url": "/collections/fw20-dresses-jumpers",
-          "tags": [
-            "kids",
-            "dress"
-          ]
-        },
-        {
-          "url": "/collections/jackets-coats",
-          "tags": [
-            "kids",
-            "jacket",
-            "coat"
-          ]
-        },
-        {
-          "url": "/collections/fw20-accessories",
-          "tags": [
-            "kids",
-            "accessories"
-          ]
-        },
-        {
-          "url": "/collections/fw20-baby-essentials",
-          "tags": [
-            "baby"
-          ]
+          "url": "/fille-3/robes-jupes-16",
+          "tags": [],
+          "date": 1648379261160
         }
       ],
       "navigation": {
-        "mode": "scrollToBottom"
+        "mode": "loadMore",
+        "loadMoreSelector": "DIV.pager INPUT.btn-2"
       },
       "created": "1",
       "updated": "1"
