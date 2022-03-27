@@ -26,7 +26,9 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
       list: [],
       pages: 0,
       btn: null,
-      message: "hello"
+      message: "hello",
+      version: "latest",
+      nextSelector: null
     };
     try {
       response.message = "try";
@@ -46,17 +48,21 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
           console.log('load more nav mode');
           response.message = "waiting parser loadmore";
           console.log("waiting parser loadmore wait a second");
-          await waitasecond(500);
+          await waitasecond(1500);
           console.log("waiting parser loadmore wait a second AFTER");
-          response.list = await processLoadMoreButton(setup, response.list, 0, function (res, pages, btn) {
+          const loadMore = await processLoadMoreButton(setup, response.list, 0, function (res, pages, btn) {
             console.log('processed ', res);
             /* response.list = res; */
-            response.pages = pages;
-            response.btn = btn;
+            /* response.pages = pages;
+            response.btn = btn; */
             return res;
           });
-          response.message = "processLoadMoreButton processed";
-          console.log('will resolve');
+          response.nextSelector = loadMore.nextSelector;
+          response.message = loadMore.message;
+          response.list = loadMore.list;
+          // message = loadMore.messsage ? loadMore.messsage : response.message;
+          // response.message = "processLoadMoreButton processed ", loadMore;
+          console.log('will resolve ', loadMore);
           resolve(response);
         } else if (setup.navigation.mode === "scrollToBottom") {
           response.message = "waiting parser processScrollToBottom";
@@ -87,10 +93,16 @@ export const bigePath = async (setup: SETUP, callback: Function) => {
 }
 
 export const processLoadMoreButton = async (setup: SETUP, response: any[], page: number, callback: Function) => {
-  console.log('processLoadMoreButton ', response, setup.lists);
-  return new Promise<PRODUCTSCHEME[]>(async (resolve, reject) => {
+
+  return new Promise<{
+    list: PRODUCTSCHEME[],
+    message: string,
+    page: number,
+    nextSelector: string
+  }>(async (resolve, reject) => {
     // let response = [];
-    async function parse(setup: SETUP, response: any[], page: number) {
+    console.log('processLoadMoreButton ', response, setup.lists);
+    async function parse(setup: SETUP, response: any[], page: number,) {
       for await (const list of setup.lists) {
         const news = await processListItem(list.target.selector);
         console.log('news ?? ', news, response);
@@ -102,7 +114,7 @@ export const processLoadMoreButton = async (setup: SETUP, response: any[], page:
         if (page === 0) page = -1;
         // process all when list load more is kicked
         callback(response, page, loadMore);
-        resolve(response);
+        resolve({ list: response, message: "performed", page: page, nextSelector: setup.navigation.loadMoreSelector });
         return response;
       } else {
         (loadMore as HTMLElement).click();
