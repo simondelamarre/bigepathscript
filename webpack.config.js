@@ -4,7 +4,7 @@ module.exports = env => {
   return {
     entry: ['./src/executePathSetup.ts'],
     mode: "production",
-    devtool: 'inline-source-map',
+    devtool: false, // 'inline-source-map',
     module: {
       rules: [
         {
